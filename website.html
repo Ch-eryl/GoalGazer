@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalGazer - Visual Study Planner for Students | Apple Store</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-light: #8B85FF;
+            --secondary: #4DAAF8;
+            --accent: #FF6584;
+            --accent-light: #FF8FA3;
+            --dark: #2D3748;
+            --dark-light: #4A5568;
+            --light: #F7FAFC;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-accent: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: #f9f9ff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Animated Background Elements */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            animation: float 15s infinite linear;
+        }
+        
+        .circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+        
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 30%;
+            right: -50px;
+            animation-delay: 3s;
+            animation-duration: 20s;
+        }
+        
+        .circle:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 100px;
+            left: 20%;
+            animation-delay: 5s;
+            animation-duration: 25s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+        
+        /* Header Styles */
+        .main-header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .main-header.scrolled {
+            padding: 10px 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-container img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-container:hover img {
+            transform: rotate(15deg);
+        }
+        
+        .logo-container h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 180px 5% 100px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.2;
+            }
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+        
+        .primary-button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .video-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .video-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .play-icon {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .app-store-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .stars {
+            color: #FFD700;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        
+        .hero-image {
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero-image img {
+            max-width: 500px;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2));
+            transform: perspective(800px) rotateY(-10deg);
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 100px 5%;
+            background: white;
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .section-header .subtitle {
+            color: var(--dark-light);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-highlight {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotate(15deg) scale(1.1);
+            background: var(--gradient-accent);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .feature-card p {
+            color: var(--dark-light);
+            text-align: center;
+        }
+        
+        /* Demo Section */
+        .demo-section {
+            padding: 100px 5%;
+            background: #f0f4ff;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .demo-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .demo-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 40px;
+            counter-increment: step-counter;
+        }
+        
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
+        }
+        
+        .steps strong {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .demo-video {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            border: 10px solid var(--dark);
+        }
+        
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 20px;
+            background: var(--dark);
+            border-radius: 0 0 10px 10px;
+            z-index: 2;
+        }
+        
+        .phone-mockup video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 25px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 5%;
+            background: white;
+            text-align: center;
+        }
+        
+        .testimonials h2 {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .testimonial-cards {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 400px;
+            text-align: left;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(108, 99, 255, 0.1);
+            font-family: serif;
+            line-height: 1;
+            z-index: 0;
+        }
+        
+        .quote {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: var(--dark);
+        }
+        
+        .student {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-light);
+        }
+        
+        .student strong {
+            display: block;
+            color: var(--dark);
+        }
+        
+        .student span {
+            font-size: 0.9rem;
+            color: var(--dark-light);
+        }
+        
+        /* Download CTA */
+        .download-cta {
+            padding: 120px 5%;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('assets/images/dots-pattern.png');
+            opacity: 0.1;
+        }
+        
+        .download-cta h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .download-cta p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .app-store-badge {
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .app-store-badge img {
+            width: 180px;
+            height: auto;
+        }
+        
+        .app-store-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .feature-highlight {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 15px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 150px 5% 80px;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-image img {
+                max-width: 100%;
+                margin-top: 50px;
+            }
+            
+            .demo-section {
+                flex-direction: column;
+            }
+            
+            .demo-content {
+                order: 2;
+            }
+            
+            .demo-video {
+                order: 1;
+                margin-bottom: 50px;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            width: 80%;
+            max-width: 900px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .modal-content video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Elements -->
+    <div class="bg-elements">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="assets/images/logo.svg" alt="GoalGazer Logo" class="logo">
+            <h1>GoalGazer</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Success Stories</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </nav>
+        <button class="cta-button">Try Free for 7 Days</button>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2 class="animate__animated animate__fadeInDown">See Your Success Before It Happens</h2>
+            <p class="lead animate__animated animate__fadeInDown animate__delay-1s">GoalGazer transforms your academic journey into a beautiful visual story. Plan smarter, stay motivated, and achieve more with our intuitive timeline system.</p>
+            <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
+                <button class="primary-button pulse-animation">
+                    <span class="icon">↓</span> Download Now
+                </button>
+                <button class="video-button" id="playDemo">
+                    <span class="play-icon">▶</span> Watch Demo
+                </button>
+            </div>
+            <div class="app-store-rating animate__animated animate__fadeIn animate__delay-3s">
+                <div class="stars">★★★★★</div>
+                <span>4.9/5 from 2,500+ students</span>
+            </div>
+        </div>
+        <div class="hero-image animate__animated animate__fadeInRight animate__delay-1s">
+            <img src="assets/images/hero-app-screens.png" alt="GoalGazer app interface" class="hero-svg">
+        </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <div class="section-header">
+            <h2 class="animate-on-scroll">Your Academic Success, Visualized</h2>
+            <p class="subtitle animate-on-scroll">GoalGazer turns your schedule into an inspiring visual journey</p>
+        </div>
+        
+        <div class="features-highlight">
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon">📊</div>
+                <h3>Timeline Mastery</h3>
+                <p>Color-coded subjects, assignment flows, and exam countdowns that make planning intuitive and even fun.</p>
+            </div>
+            <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s">
+                <div class="feature-icon">🎯</div>
+                <h3>Smart Goal Wizard</h3>
+                <p>Break big dreams into achievable steps with our guided goal-setting system tailored for students.</p>
+            </div>
+            <div class="feature-card animate-on-scroll" style="transition-delay: 0.4s">
+                <div class="feature-icon">🤝</div>
+                <h3>Family Sync</h3>
+                <p>Share progress with parents on your terms - celebrate wins together while maintaining your independence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="demo-section">
+        <div class="demo-content">
+            <h2 class="animate-on-scroll">How GoalGazer Works</h2>
+            <ol class="steps">
+                <li class="animate-on-scroll">
+                    <strong>Map Your Semester</strong>
+                    <p>Drag and drop all your classes, assignments, and exams onto your visual timeline.</p>
+                </li>
+                <li class="animate-on-scroll" style="transition-delay: 0.2s">
+                    <strong>Set Milestones</strong>
+                    <p>Create checkpoints for big projects and watch your path to success take shape.</p>
+                </li>
+                <li class="animate-on-scroll" style="transition-delay: 0.4s">
+                    <strong>Track & Celebrate</strong>
+                    <p>Watch your progress grow with satisfying visual feedback and achievement badges.</p>
+                </li>
+            </ol>
+        </div>
+        <div class="demo-video animate-on-scroll">
+            <div class="phone-mockup">
+                <video autoplay loop muted playsinline>
+                    <source src="assets/videos/app-preview.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <h2 class="animate-on-scroll">Students Are Saying...</h2>
+        <div class="testimonial-cards">
+            <div class="testimonial-card animate-on-scroll">
+                <div class="quote">"GoalGazer changed everything! I went from cramming to actually enjoying my study schedule. The visual timeline makes it so easy to understand my workload."</div>
+                <div class="student">
+                    <img src="assets/images/student1.jpg" alt="Alex R." class="avatar">
+                    <div>
+                        <strong>Alex R.</strong>
+                        <span>Junior, Stanford University</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card animate-on-scroll" style="transition-delay: 0.2s">
+                <div class="quote">"Finally an app that speaks my visual language. I understand my workload at a glance now and my grades have improved by a full letter grade!"</div>
+                <div class="student">
+                    <img src="assets/images/student2.jpg" alt="Maya T." class="avatar">
+                    <div>
+                        <strong>Maya T.</strong>
+                        <span>Sophomore, NYU</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card animate-on-scroll" style="transition-delay: 0.4s">
+                <div class="quote">"The goal tracking system kept me motivated throughout the semester. I actually looked forward to checking off tasks because the visual progress was so satisfying."</div>
+                <div class="student">
+                    <img src="assets/images/student3.jpg" alt="Jordan K." class="avatar">
+                    <div>
+                        <strong>Jordan K.</strong>
+                        <span>Freshman, UCLA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="download-cta">
+        <div class="particles"></div>
+        <h2 class="animate-on-scroll">Ready to Transform Your Academic Journey?</h2>
+        <p class="animate-on-scroll">Download GoalGazer today and see your potential unfold.</p>
+        <a href="https://apps.apple.com/app/goalgazer" class="app-store-badge animate-on-scroll">
+            <img src="assets/images/app-store-badge.svg" alt="Download on the App Store">
+        </a>
+        <div class="feature-highlight animate-on-scroll">
+            <span>Free 7-day trial • Cancel anytime • Premium features unlocked</span>
+        </div>
+    </section>
+
+    <div class="video-modal" id="demoModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <video controls id="demoVideo">
+                <source src="assets/videos/demo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2px and 5px
+                const size = Math.random() * 3 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-${size}px`;
+                
+                // Random animation duration between 10s and 20s
+                const duration = Math.random() * 10 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Scroll animations
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+        
+        // Video modal functionality
+        const modal = document.getElementById('demoModal');
+        const video = document.getElementById('demoVideo');
+        
+        document.getElementById('playDemo').addEventListener('click', () => {
+            modal.classList.add('active');
+            video.play();
+        });
+        
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            modal.classList.remove('active');
+            video.pause();
+        });
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            createParticles();
+            animateOnScroll();
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
