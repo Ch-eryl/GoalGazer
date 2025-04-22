@@ -3,7 +3,7 @@
 # 📚 GoalGazer: Your Academic Sidekick
 
 Welcome to GoalGazer!
-This is part of the "Sisters" series project** created by Gloria — a passionate high schooler with a love for computer science, building apps, and designing websites.
+This is part of the "Sisters" series project.
 
 ## 🎯 About GoalGazer
 
