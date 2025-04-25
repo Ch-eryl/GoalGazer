@@ -117,13 +117,47 @@
             gap: 10px;
         }
 
+        /* Logo Animation Styles */
         .logo-container img {
             height: 40px;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease, filter 0.5s ease;
+            animation: logoPulse 4s infinite alternate;
         }
-
+        
+        @keyframes logoPulse {
+            0% {
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 0 rgba(108, 99, 255, 0));
+            }
+            25% {
+                transform: scale(1.05) rotate(2deg);
+                filter: drop-shadow(0 2px 5px rgba(108, 99, 255, 0.2));
+            }
+            50% {
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 4px 10px rgba(108, 99, 255, 0.3));
+            }
+            75% {
+                transform: scale(1.05) rotate(-2deg);
+                filter: drop-shadow(0 2px 5px rgba(108, 99, 255, 0.2));
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 0 rgba(108, 99, 255, 0));
+            }
+        }
+        
         .logo-container:hover img {
-            transform: rotate(15deg);
+            animation: logoFloat 2s infinite ease-in-out;
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-8px) rotate(5deg);
+            }
         }
 
         .logo-container h1 {
