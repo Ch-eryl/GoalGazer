@@ -121,7 +121,7 @@
         .logo-container img {
             height: 40px;
             transition: transform 0.5s ease, filter 0.5s ease;
-            animation: logoPulse 4s infinite alternate;
+            animation: logoPulse 4s infinite alternate, logoColorChange 8s infinite alternate;
         }
         
         @keyframes logoPulse {
@@ -147,8 +147,26 @@
             }
         }
         
+        @keyframes logoColorChange {
+            0% {
+                filter: hue-rotate(0deg) drop-shadow(0 0 5px rgba(108, 99, 255, 0.3));
+            }
+            25% {
+                filter: hue-rotate(30deg) drop-shadow(0 0 5px rgba(77, 170, 248, 0.3));
+            }
+            50% {
+                filter: hue-rotate(60deg) drop-shadow(0 0 5px rgba(255, 101, 132, 0.3));
+            }
+            75% {
+                filter: hue-rotate(90deg) drop-shadow(0 0 5px rgba(139, 133, 255, 0.3));
+            }
+            100% {
+                filter: hue-rotate(120deg) drop-shadow(0 0 5px rgba(108, 99, 255, 0.3));
+            }
+        }
+        
         .logo-container:hover img {
-            animation: logoFloat 2s infinite ease-in-out;
+            animation: logoFloat 2s infinite ease-in-out, logoColorChange 4s infinite alternate;
         }
         
         @keyframes logoFloat {
@@ -654,416 +672,30 @@
             width: 100%;
             height: 100%;
             background: url('assets/images/dots-pattern.png');
-            opacity: 0.1;
-        }
-
-        .download-cta h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .download-cta p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
-            position: relative;
-        }
-
-        .app-store-badge {
-            display: inline-block;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .app-store-badge img {
-            width: 180px;
-            height: auto;
-        }
-
-        .app-store-badge:hover {
-            transform: scale(1.05);
-        }
-
-        .feature-highlight {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 15px 30px;
-            border-radius: 30px;
-            display: inline-block;
-            font-weight: 500;
-            position: relative;
-        }
-
-        /* Floating particles */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float-particle linear infinite;
-        }
-
-        @keyframes float-particle {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(20px);
-                opacity: 0;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 150px 5% 80px;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .hero-image img {
-                max-width: 100%;
-                margin-top: 50px;
-            }
-
-            .demo-section {
-                flex-direction: column;
-            }
-
-            .demo-content {
-                order: 2;
-            }
-
-            .demo-video {
-                order: 1;
-                margin-bottom: 50px;
-            }
-
-            nav ul {
-                display: none;
-            }
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-        
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Video Modal */
-        .video-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .video-modal.active {
-            display: flex;
-            opacity: 1;
-        }
-        
-        .modal-content {
-            width: 80%;
-            max-width: 900px;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-        
-        .modal-content video {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-    </style>
-</head>
-<body>
-    <!-- Animated Background Elements -->
-    <div class="bg-elements">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-    </div>
-    
-    <!-- Floating Particles -->
-    <div class="particles" id="particles"></div>
-    
-    <header class="main-header">
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/zfHQZ653/Goal-Gazer-1.png" alt="GoalGazer Logo" class="logo">
-            <h1>GoalGazer</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#testimonials">Success Stories</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#download">Download</a></li>
-            </ul>
-        </nav>
-        <button class="cta-button">Try Free for 7 Days</button>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h2 class="animate__animated animate__fadeInDown">See Your Success Before It Happens</h2>
-            <p class="lead animate__animated animate__fadeInDown animate__delay-1s">GoalGazer transforms your academic journey into a beautiful visual story. Plan smarter, stay motivated, and achieve more with our intuitive timeline system.</p>
-            <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
-                <button class="primary-button pulse-animation">
-                    <span class="icon">↓</span> Download Now
-                </button>
-                <button class="video-button" id="playDemo">
-                    <span class="play-icon">▶</span> Watch Demo
-                </button>
-            </div>
-            <div class="app-store-rating animate__animated animate__fadeIn animate__delay-3s">
-                <div class="stars">★★★★★</div>
-                <span>4.9/5 from 2,500+ students</span>
-            </div>
-        </div>
-        <div class="hero-image animate__animated animate__fadeInRight animate__delay-1s">
-            <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="GoalGazer app interface" class="hero-svg">
-        </div>
-    </section>
-
-    <section id="features" class="features-section">
-        <div class="section-header">
-            <h2 class="animate-on-scroll">Your Academic Success, Visualized</h2>
-            <p class="subtitle animate-on-scroll">GoalGazer turns your schedule into an inspiring visual journey</p>
-        </div>
-        
-        <div class="features-highlight">
-            <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">📊</div>
-                <h3>Timeline Mastery</h3>
-                <p>Color-coded subjects, assignment flows, and exam countdowns that make planning intuitive and even fun.</p>
-            </div>
-            <div class="feature-card animate-on-scroll" style="transition-delay: 0.2s">
-                <div class="feature-icon">🎯</div>
-                <h3>Smart Goal Wizard</h3>
-                <p>Break big dreams into achievable steps with our guided goal-setting system tailored for students.</p>
-            </div>
-            <div class="feature-card animate-on-scroll" style="transition-delay: 0.4s">
-                <div class="feature-icon">🤝</div>
-                <h3>Family Sync</h3>
-                <p>Share progress with parents on your terms - celebrate wins together while maintaining your independence.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="how-it-works" class="demo-section">
-        <div class="demo-content">
-            <h2 class="animate-on-scroll">How GoalGazer Works</h2>
-            <ol class="steps">
-                <li class="animate-on-scroll">
-                    <strong>Map Your Semester</strong>
-                    <p>Drag and drop all your classes, assignments, and exams onto your visual timeline.</p>
-                </li>
-                <li class="animate-on-scroll" style="transition-delay: 0.2s">
-                    <strong>Set Milestones</strong>
-                    <p>Create checkpoints for big projects and watch your path to success take shape.</p>
-                </li>
-                <li class="animate-on-scroll" style="transition-delay: 0.4s">
-                    <strong>Track & Celebrate</strong>
-                    <p>Watch your progress grow with satisfying visual feedback and achievement badges.</p>
-                </li>
-            </ol>
-        </div>
-        <div class="demo-video animate-on-scroll">
-            <div class="phone-mockup">
-                <video autoplay loop muted playsinline>
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-girl-studying-with-a-laptop-12255-large.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-    </section>
-
-    <section id="testimonials" class="testimonials">
-        <h2 class="animate-on-scroll">Students Are Saying...</h2>
-        <div class="testimonial-cards">
-            <div class="testimonial-card animate-on-scroll">
-                <div class="quote">"GoalGazer changed everything! I went from cramming to actually enjoying my study schedule. The visual timeline makes it so easy to understand my workload."</div>
-                <div class="student">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Alex R." class="avatar">
-                    <div>
-                        <strong>Alex R.</strong>
-                        <span>Junior, Stanford University</span>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card animate-on-scroll" style="transition-delay: 0.2s">
-                <div class="quote">"Finally an app that speaks my visual language. I understand my workload at a glance now and my grades have improved by a full letter grade!"</div>
-                <div class="student">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" alt="Maya T." class="avatar">
-                    <div>
-                        <strong>Maya T.</strong>
-                        <span>Sophomore, NYU</span>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card animate-on-scroll" style="transition-delay: 0.4s">
-                <div class="quote">"The goal tracking system kept me motivated throughout the semester. I actually looked forward to checking off tasks because the visual progress was so satisfying."</div>
-                <div class="student">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Jordan K." class="avatar">
-                    <div>
-                        <strong>Jordan K.</strong>
-                        <span>Freshman, UCLA</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="download" class="download-cta">
-        <div class="particles"></div>
-        <h2 class="animate-on-scroll">Ready to Transform Your Academic Journey?</h2>
-        <p class="animate-on-scroll">Download GoalGazer today and see your potential unfold.</p>
-        <a href="https://apps.apple.com/app/goalgazer" class="app-store-badge animate-on-scroll">
-            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
-        </a>
-        <div class="feature-highlight animate-on-scroll">
-            <span>Free 7-day trial • Cancel anytime • Premium features unlocked</span>
-        </div>
-    </section>
-
-    <div class="video-modal" id="demoModal">
-        <div class="modal-content">
-            <span class="close-modal">×</span>
-            <video controls id="demoVideo">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-girl-studying-with-a-laptop-12255-large.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </div>
-
-    <script>
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random size between 2px and 5px
-                const size = Math.random() * 3 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Random position
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.bottom = `-${size}px`;
-                
-                // Random animation duration between 10s and 20s
-                const duration = Math.random() * 10 + 10;
-                particle.style.animationDuration = `${duration}s`;
-                
-                // Random delay
-                particle.style.animationDelay = `${Math.random() * 10}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('.main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Scroll animations
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.animate-on-scroll');
-
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-
-                if (elementPosition < screenPosition) {
-                    element.classList.add('animated');
-                }
-            });
-        }
-
-        // Video modal functionality
-        const modal = document.getElementById('demoModal');
-        const video = document.getElementById('demoVideo');
-
-        document.getElementById('playDemo').addEventListener('click', () => {
-            modal.classList.add('active');
-            video.play();
-        });
-
-        document.querySelector('.close-modal').addEventListener('click', () => {
-            modal.classList.remove('active');
+                       modal.classList.remove('active');
             video.pause();
+            video.currentTime = 0;
+        });
+
+        // Close modal when clicking outside the video
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                video.pause();
+                video.currentTime = 0;
+            }
         });
 
         // Initialize
         window.addEventListener('load', () => {
             createParticles();
             animateOnScroll();
+            
+            // Preload the demo video
+            const videoPreload = document.createElement('video');
+            videoPreload.src = 'https://dw.convertfiles.com/files/0666394001745574509/goagazer%20your%20ultimate%20study%20organizer_free%20%281%29.mp4';
+            videoPreload.preload = 'auto';
+            document.body.appendChild(videoPreload);
         });
 
         window.addEventListener('scroll', animateOnScroll);
